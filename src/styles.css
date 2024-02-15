@@ -1,1 +1,283 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+/** Base Styles
+--------------------------------------------------------------*/
+:root {
+    --accent-color: #ebfdff;
+    --secondary-color: #3ac5ce;
+    --dark-color: #083c3e;
+    --grey-color: #f8f8f8;
+    --body-text-color: #083c3e;
+    --light-text-color: #7c7c7c;
+    --link-color: #ffffff;
+  }
+  
+  /** Typography
+    --------------------------------------------------------------*/
+  body {
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 36px;
+    color: var(--light-text-color);
+  }
+  
+  h1,
+  .h1,
+  h2,
+  .h2,
+  h3,
+  .h3,
+  h4,
+  .h4,
+  h5,
+  .h5,
+  h6,
+  .h6 {
+    font-family: "Jost";
+    font-weight: 400;
+    color: var(--body-text-color);
+    letter-spacing: 0.04em;
+  }
+  
+  h1,
+  .h1 {
+    font-size: 70px;
+  }
+  
+  h3,
+  .h3 {
+    font-size: 24px;
+  }
+  
+  h4,
+  .h4 {
+    font-size: 22px;
+  }
+  
+  h5,
+  .h5 {
+    margin-bottom: 0px;
+  }
+  
+  p {
+    font-family: "Roboto";
+    color: var(--light-text-color);
+    font-size: 16px;
+    line-height: 30px;
+  }
+  
+  a {
+    color: var(--body-text-color);
+    text-decoration: none;
+    transition: all 0.3s ease-out;
+    cursor: pointer;
+  }
+  
+  a:hover {
+    color: var(--secondary-color);
+    text-decoration: none;
+  }
+  
+  .btn.btn-primary {
+    border-radius: 60px;
+    --bs-btn-color: var(--accent-color);
+    --bs-btn-bg: var(--body-text-color);
+    --bs-btn-border-color: var(--body-text-color);
+    --bs-btn-hover-color: var(--accent-color);
+    --bs-btn-hover-bg: var(--secondary-color);
+    --bs-btn-hover-border-color: var(--secondary-color);
+  }
+  
+  .btn.btn-primary.first-button {
+    font-size: 19px;
+    padding: 20px 60px;
+    transition: all 0.3s ease-in;
+  }
+  
+  .btn.btn-outline-primary {
+    border-radius: 35px;
+    --bs-btn-color: var(--secondary-color);
+    --bs-btn-border-color: var(--secondary-color);
+    --bs-btn-hover-color: var(--accent-color);
+    --bs-btn-hover-bg: var(--secondary-color);
+    --bs-btn-hover-border-color: var(--secondary-color);
+  }
+  
+  .btn-check:checked+.btn,
+  .btn.active,
+  .btn.show,
+  .btn:first-child:active,
+  :not(.btn-check)+.btn:active {
+    color: var(--link-color);
+    background-color: var(--dark-color);
+    border-color: var(--dark-color);
+  }
+  
+  .btn.btn-outline-primary.second-button {
+    font-size: 19px;
+    padding: 20px 50px;
+    transition: all 0.3s ease-in;
+  }
+  
+  @media only screen and (max-width: 768px) {
+  
+    h1,
+    .h1 {
+      font-size: 50px;
+    }
+  }
+  
+  /* navigation bar  */
+  
+  section#navigation-bar {
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background: var(--accent-color);
+  }
+  
+  .nav-link {
+    color: var(--body-text-color);
+  }
+  
+  a.nav-link.active,
+  .anav-link:focus,
+  a.nav-link:hover {
+    color: var(--dark-color);
+  }
+  
+  a.nav-link::after {
+    content: "";
+    text-align: center;
+    display: block;
+    width: 0;
+    height: 2px;
+    background: var(--secondary-color);
+    transition: width 0.3s;
+  }
+  
+  a.nav-link.active::after,
+  a.nav-link:focus::after,
+  a.nav-link:hover::after {
+    width: 100%;
+    transition: width 0.3s;
+  }
+  
+  /* dropdown  */
+  .dropdown-toggle::after {
+    border: none;
+    margin-left: 0em;
+    vertical-align: 0em;
+  }
+  
+  .dropdown-item.active,
+  .dropdown-item:active {
+    color: var(--body-text-color);
+    text-decoration: none;
+    background-color: var(--grey-color);
+  }
+  
+  /* modal  */
+  .modal-header {
+    border-bottom: none;
+  }
+  
+  /* form-control  */
+  .form-control:focus {
+    border-color: var(--light-text-color);
+    box-shadow: none;
+    color: var(--body-text-color);
+  }
+  
+  .modal-backdrop {
+    --bs-backdrop-zindex: 999;
+    --bs-backdrop-bg: #000;
+    --bs-backdrop-opacity: 0.5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--bs-backdrop-zindex);
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bs-backdrop-bg);
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .nav {
+      display: grid;
+    }
+  
+    /* .account {
+      justify-content: center !important;
+      margin: 70px 0px;
+    } */
+  }
+  
+  @media only screen and (max-width: 1460px) and (min-width: 990px) {
+    a.login {
+      display: none;
+    }
+  
+    button.signup {
+      display: none;
+    }
+  
+    a.get-pro {
+      display: none;
+    }
+  }
+  
+  /* hero section  */
+  
+  section#hero {
+    background: var(--accent-color);
+    margin-top: 30px;
+    margin-bottom: 30px;
+    
+  }
+  
+  .hero.container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  
+  a.icon-link {
+    color: var(--body-text-color);
+    text-decoration: none;
+    display: inline-table;
+  }
+  
+  a.icon-link:after {
+    content: "";
+    display: block;
+    border-bottom: 1px solid var(--dark-color);
+    width: 100%;
+    transition: width 0.2s ease-out;
+  }
+  
+  a.icon-link:hover:after {
+    width: 20%;
+  }
+  
+  .mi-recuadro {
+      width: 300px; /* Ancho del recuadro */
+      height: 75px; /* Altura del recuadro */
+      border: 2px solid #ff9900; /* Borde s�lido de 2 p�xeles, color #333 */
+      padding: 20px; /* Espaciado interno de 20 p�xeles */
+      margin: 3px auto; /* Margen superior e inferior de 50 p�xeles, centrado horizontalmente */
+      text-align: center; /* Alineaci�n del texto al centro */
+      background-color: white; /* Color de fondo */
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      line-height: 25px; /* Ajusta esto a la altura del recuadro */
+  }
+  
+  .mi-recuadro div {
+      font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #192255;
+      }
