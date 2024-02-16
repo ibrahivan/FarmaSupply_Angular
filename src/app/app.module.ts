@@ -9,6 +9,7 @@ import { BienvenidaComponent } from './core/bienvenida/bienvenida.component';
 import { MenuComponent } from './core/menu/menu.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -24,10 +25,10 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    provideFirebaseApp(() => initializeApp({"projectId":"farmasupply-d5167","appId":"1:587632884021:web:a94ef7dc92636b9208f47c","storageBucket":"farmasupply-d5167.appspot.com","apiKey":"AIzaSyAnW_yeiZFlsYxtRokZNTl-DHPUr5HoZi4","authDomain":"farmasupply-d5167.firebaseapp.com","messagingSenderId":"587632884021","measurementId":"G-5C5J3K716S"})),
-    provideFirestore(() => getFirestore()),
-    provideAuth(() => getAuth()),
     NgbModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
   
   ],
   providers: [],

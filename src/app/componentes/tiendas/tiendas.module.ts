@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 import { TiendasRoutingModule } from './tiendas-routing.module';
 import { TiendasComponent } from './tiendas.component';
 import { ListaTiendasComponent } from './lista-tiendas/lista-tiendas.component';
@@ -12,10 +12,12 @@ import { RegistroTiendaComponent } from './registro-tienda/registro-tienda.compo
     TiendasComponent,
     ListaTiendasComponent,
     RegistroTiendaComponent
+    
   ],
   imports: [
     CommonModule,
-    TiendasRoutingModule
+    TiendasRoutingModule,
+    FormsModule
   ]
 })
 export class TiendasModule { }

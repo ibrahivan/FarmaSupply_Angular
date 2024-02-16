@@ -1,9 +1,2 @@
 {
-  "hosting": [
-    {
-      "target": "FarmaSupply",
-      "source": ".",
-      "frameworksBackend": {}
-    }
-  ]
 }

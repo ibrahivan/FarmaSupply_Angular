@@ -1,8 +1,10 @@
+import { Pedido } from "./pedido";
 
 export interface Tienda {
-  idTienda: string;
+  id?: string;
   nombreTienda: string;
   direccionTienda: string;
   codigopostalTienda: string;
   propietarioTiendaId: string
+  misPedidos?: Pedido[];
 }

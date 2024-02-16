@@ -1,15 +1,16 @@
+import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
-import { Usuario } from '../modelo/usuario';
-import { UsuarioService } from './usuario.service';
-import { Router } from '@angular/router';
 import { BaseDatosService } from './base-datos.service';
+import { Usuario } from '../modelo/usuario';
+import { Router } from '@angular/router';
+import { Tienda } from '../modelo/tienda';
+
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificacionesService {
-
   constructor(
     private _baseDatosService: BaseDatosService,
     private usuarioServicio: UsuarioService,
@@ -32,25 +33,26 @@ export class NotificacionesService {
 
   confirmarLogout() {
     Swal.fire({
-        title: '¿Estás seguro de que deseas cerrar sesión?',
-        text: 'Serás redirigido a la página de bienvenida.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, cerrar sesión'
+      title: '¿Estás seguro de que deseas cerrar sesión?',
+      text: 'Serás redirigido a la página de bienvenida.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, cerrar sesión',
     }).then((result) => {
-        if (result.isConfirmed) {
-          this.usuarioServicio.logout()
+      if (result.isConfirmed) {
+        this.usuarioServicio
+          .logout()
           .then(() => {
             this.router.navigate(['']);
           })
-          .catch(error => console.log(error));
-        } else {
-            console.log('Logout cancelado');
-        }
+          .catch((error) => console.log(error));
+      } else {
+        console.log('Logout cancelado');
+      }
     });
-}
+  }
 
   /**
    * Muestra una confirmación para eliminar un elemento y realiza la acción si es confirmada.
@@ -58,14 +60,14 @@ export class NotificacionesService {
    * @param {string} nombre - Nombre del elemento a eliminar.
    * @param {string} elementoEliminar - Tipo de elemento que se va a eliminar.
    * @param {string} coleccion - Nombre de la colección en la base de datos.
-   * @param {Usuario} usuario  - usuario a eliminar
+   * @param {any} objetoAEliminar  - el objeto a eliminar
    */
-  confirmarEliminar(
+  confirmarEliminarUsuario(
     id: string,
     nombre: string,
     elementoEliminar: string,
     coleccion: string,
-    usuario: Usuario
+    objetoAEliminar: any
   ) {
     Swal.fire({
       title: `¿Estás seguro de eliminar ${elementoEliminar} ${nombre}?`,
@@ -78,12 +80,13 @@ export class NotificacionesService {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        // Si se confirma, realiza la eliminación a través del servicio FirebaseService
+        // Si el administrador confirma eliminar usuario, se realiza la
+        // eliminación en firestore y en firebaseAuth del usuario
         this._baseDatosService
           .eliminar(coleccion, id)
           .then(() => {
             console.log(`${elementoEliminar} eliminado`);
-            this.usuarioServicio.borrarUsuario(usuario);
+            this.usuarioServicio.borrarUsuario(objetoAEliminar);
           })
           .catch((error) => {
             console.log(error);
@@ -97,4 +100,53 @@ export class NotificacionesService {
       }
     });
   }
+  confirmarEliminarTienda(
+    id: string,
+    nombreTienda: string,
+    direccionTienda: string,
+    coleccion: string,
+    misTiendas: Tienda[],
+    propietario: Usuario | undefined
+  ) {
+    Swal.fire({
+      title: `¿Estás seguro de eliminar la tienda ${nombreTienda}?`,
+      text: 'Esta acción no se puede deshacer',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3366ff',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si se confirma eliminar la tienda, se realiza la eliminación en firestore y se actualiza el array
+        // de tiendas del usuario a través del servicio Firebase
+        const indiceDeLaTienda = misTiendas.findIndex(tienda => tienda.id === id);
+        if (indiceDeLaTienda !== -1) {
+          misTiendas.splice(indiceDeLaTienda, 1);
+        }
+        console.log(misTiendas);
+        this._baseDatosService.eliminar(coleccion, id)
+          .then(() => {
+            console.log(`Tienda eliminada correctamente de la colección ${coleccion}`);
+            if (propietario !== undefined) {
+              propietario.misTiendas = misTiendas;
+              this._baseDatosService.actualizar('usuarios', propietario)
+                .then(() => console.log('Actualizado usuario eliminando la tienda del array misTiendas'))
+                .catch((error) => console.log('Error al actualizar el usuario:', error));
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        Swal.fire(
+          // Muestra una notificación de éxito
+          '¡Acción completada!',
+          `La tienda ${nombreTienda} se ha eliminado con éxito.`,
+          'success'
+        );
+      }
+    });
+  }
+  
 }

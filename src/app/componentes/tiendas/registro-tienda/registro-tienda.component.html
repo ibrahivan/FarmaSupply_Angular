@@ -1,1 +1,45 @@
-<p>registro-tienda works!</p>
+<div class="registro cardPrincipal">
+    <form class="custom-form" (ngSubmit)="submitForm()">
+      <h2 class="text-center mb-5"><i class="bi bi-bicycle" style="color: #1f3c85;"> Registro nueva tienda</i></h2>  
+      <div class="mb-3">
+        <label for="marca" class="form-label textoPrincipal">Nombre tienda</label>
+        <input
+          type="text"
+          id="marca"
+          name="marca"
+          class="form-control"
+          placeholder="Introduzca la marca"
+          [(ngModel)]="tienda.nombreTienda"
+          required
+        />
+      </div>
+  
+      <div class="mb-3">
+        <label for="modelo" class="form-label textoPrincipal">Direccion </label>
+        <input
+          type="text"
+          id="modelo"
+          name="modelo"
+          class="form-control"
+          placeholder="Introduzca el modelo"
+          [(ngModel)]="tienda.direccionTienda"
+          required
+        />
+      </div>
+  
+      <div class="mb-3">
+        <label for="color" class="form-label textoPrincipal">Codigo postal</label>
+        <input
+          type="text"
+          id="color"
+          name="color"
+          class="form-control"
+          placeholder="Introduzca el color"
+          [(ngModel)]="tienda.codigopostalTienda"
+          required
+        />
+      </div> 
+      <button type="submit" class="btn btn-primary mt-5"><i class="bi bi-plus-square fs-5"> Alta tienda</i></button>
+    </form>
+  </div>
+  

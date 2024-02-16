@@ -1,4 +1,4 @@
-import { Pedido } from "./pedido";
+
 import { Tienda } from "./tienda";
 
 export interface Usuario {
@@ -10,6 +10,5 @@ export interface Usuario {
     telefono: string;
     rol?: string;
     fechaRegistro?: Date;
-    listaIdUsuarioPedido?: Pedido[] | null;
-    listaIdUsuarioTienda?: Tienda[] | null;
+    misTiendas?: Tienda[] ;
 }

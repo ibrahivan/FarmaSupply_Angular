@@ -21,7 +21,9 @@
     line-height: 36px;
     color: var(--light-text-color);
   }
-  
+  nav, footer{
+    color: var(--secondary-color);
+  }
   h1,
   .h1,
   h2,

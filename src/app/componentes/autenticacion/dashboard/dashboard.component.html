@@ -1,1 +1,39 @@
-<p>dashboard works!</p>
+<div class="row cardPrincipal">
+    <div class="col">
+         <h3 class="text-center mt-5 subtituloSecundario3">Dashboard</h3>
+        <hr class="border border-primary border-2 opacity-55 mb-5 mt-4">
+        <h4 class="text-light text-center subtituloSecundario">Bienvenido {{emailUsuarioActual}}</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4" *ngIf="usuarioActual?.rol === 'ROLE_ADMIN'">
+        <div class="card mb-4 dashboardCard border border-dark cardPrincipal">
+            <i class="bi bi-person-fill-gear fs-1 ms-4" style="color: #1f3c85"></i>
+            <div class="card-body">
+                <h5 class="card-title">Administrar Usuarios</h5>
+                <p class="card-text">Acceda para gestionar usuarios.</p>
+                <a routerLink="/administracion/listado-usuarios" class="btn buttonPrincipal"><i class="bi bi-arrow-right-circle"> Acceder</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 dashboardCard border border-dark cardPrincipal">
+            <i class="bi bi bi-shop fs-1 ms-3" style="color: #1f3c85"></i>
+            <div class="card-body">
+                <h5 class="card-title">Mis tiendas</h5>
+                <p class="card-text">Acceda para gestionar sus tiendas.</p>
+                <a routerLink="/tiendas/mis-tiendas" class="btn buttonPrincipal"><i class="bi bi-arrow-right-circle"> Acceder</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 dashboardCard border border-dark cardPrincipal">
+            <i class="bi bi bi-boxes fs-1 ms-3" style="color: #1f3c85"></i>
+            <div class="card-body">
+                <h5 class="card-title">Pedidos</h5>
+                <p class="card-text">Realizar un nuevo pedido</p>
+                <a routerLink="/pedidos/listado-pedidos" class="btn buttonPrincipal"><i class="bi bi-arrow-right-circle"> Acceder</i></a>
+            </div>
+        </div>
+    </div>
+</div>

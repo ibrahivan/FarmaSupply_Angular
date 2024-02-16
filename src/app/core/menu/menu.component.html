@@ -1,1 +1,58 @@
-<p>menu works!</p>
+<section id="navigation-bar" class="navigation position-fixed ">
+    <nav class="navbar  navbar-expand-lg " id="navbar-example2">
+        <div class="container-fluid ms-5">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse ms-3" id="navbarSupportedContent">
+                <ul class="navbar-nav me-5 ms-auto">
+                    <li class="nav-item me-3" *ngIf="componenteActual === ''">
+                        <a class="nav-link fw-bold " routerLink="/autenticacion/login"><i
+                                class="bi bi-box-arrow-in-right fs-5"> Iniciar sesión</i></a>
+                    </li>
+                    <li class="nav-item me-3" *ngIf="componenteActual === ''">
+                        <a class="nav-link fw-bold " routerLink="/autenticacion/registrar"><i
+                                class="bi bi-person-add fs-5"> Crear cuenta</i></a>
+                    </li>
+                    <li class="nav-item me-3" *ngIf="componenteActual === 'autenticacion/login'">
+                        <a class="nav-link fw-bold " routerLink="/autenticacion/registrar"><i
+                                class="bi bi-person-add fs-5"> Crear cuenta</i></a>
+                    </li>
+                    <li class="nav-item me-3" *ngIf="componenteActual === 'autenticacion/registrar'">
+                        <a class="nav-link fw-bold " routerLink="/autenticacion/login"><i
+                                class="bi bi-box-arrow-in-right fs-5"> Iniciar sesión</i></a>
+                    </li>
+                    <li class="nav-item me-3" *ngIf="componenteActual === 'autenticacion/dashboard'">
+                        <button type="button" class="btn buttonPrincipal" (click)="onClick()"><i
+                                class="bi bi-box-arrow-in-left"> Cerrar sesión</i></button>
+                    </li>
+                    <li class="nav-item me-3" *ngIf="componenteActual === 'administracion/listado-usuarios'">
+                        <a class="nav-link fw-bold " routerLink="/autenticacion/dashboard"><i
+                                class="bi bi-house fs-5"> Volver a dashboard</i></a>
+                    </li>
+                    <li class="nav-item me-3" *ngIf="componenteActual === 'tiendas/mis-tiendas'">
+                        <a class="nav-link fw-bold " routerLink="/autenticacion/dashboard"><i
+                                class="bi bi-house fs-5"> Volver a dashboard</i></a>
+                    </li>
+                    <!--   <li class="nav-item me-3" *ngIf="componenteActual === 'quedadas/listado-quedadas'">
+                    <a class="nav-link fw-bold text-white" routerLink="/autenticacion/dashboard"><i class="bi bi-house fs-5"> Volver a dashboard</i></a>
+                </li> -->
+                    <li class="nav-item me-3" *ngIf="componenteActual === 'tiendas/registrar-tienda'">
+                        <a class="nav-link fw-bold " routerLink="/tiendas/mis-tiendas"><i
+                                class="bi bi-bicycle fs-5"> Volver a mis tiendas</i></a>
+                    </li>
+                    <li class="nav-item me-3" *ngIf="componenteActual === 'administracion/editar-usuario'">
+                        <a class="nav-link fw-bold " routerLink="/administracion/listado-usuarios"><i
+                                class="bi bi-person-fill-gear fs-5"> Volver a administración de usuarios</i></a>
+                    </li>
+                    <!-- <li class="nav-item me-3" *ngIf="componenteActual === 'quedadas/planificar-quedada'">
+                    <a class="nav-link fw-bold text-white" routerLink="/quedadas/listado-quedadas"><i class="bi bi-people-fill fs-5"> Volver a quedadas</i></a>
+                </li>     -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+</section>

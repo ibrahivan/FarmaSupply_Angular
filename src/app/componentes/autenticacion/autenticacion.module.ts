@@ -6,18 +6,21 @@ import { AutenticacionComponent } from './autenticacion.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     AutenticacionComponent,
-    DashboardComponent,
+    RegistroComponent,
     LoginComponent,
-    RegistroComponent
+    DashboardComponent,
+    
   ],
   imports: [
     CommonModule,
-    AutenticacionRoutingModule
+    AutenticacionRoutingModule,
+    ReactiveFormsModule,
   ]
 })
 export class AutenticacionModule { }
