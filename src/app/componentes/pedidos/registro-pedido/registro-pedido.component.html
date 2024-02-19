@@ -1,20 +1,27 @@
 <div class="container">
-    <div *ngIf="tienda" class="mt-4">
-      <h2>Pedido para {{ tienda.nombreTienda }}</h2>
-      <div *ngIf="productos && productos.length" class="mt-4">
-        <h3>Productos disponibles:</h3>
-        <ul class="list-group">
-          <li *ngFor="let producto of productos" class="list-group-item">
+  <div *ngIf="tienda" class="mt-4">
+    <h2>Pedido para {{ tienda.nombre }}</h2>
+    <div *ngIf="productos && productos.length" class="mt-4">
+      <h3>Productos disponibles:</h3>
+      <form>
+        <div *ngFor="let producto of productos" class="form-check">
+          <input type="checkbox" class="form-check-input" id="{{producto.id}}" 
+                 [checked]="cantidadProductosSeleccionados[producto.id] > 0"
+                 (change)="actualizarCantidad(producto.id, $event.target.checked)">
+          <label class="form-check-label" for="{{producto.id}}">
             {{ producto.nombre }} - {{ producto.descripcion }} - Precio: {{ producto.precioUnitario | currency:'USD':'symbol':'1.2-2' }}
-          </li>
-        </ul>
-        <button (click)="realizarPedido()" class="btn btn-primary mt-3">Realizar Pedido</button>
-      </div>
-      <div *ngIf="!productos || productos.length === 0" class="mt-4">
-        <p>No hay productos disponibles.</p>
-      </div>
+          </label>
+          <input type="number" class="form-control" [disabled]="cantidadProductosSeleccionados[producto.id] === 0" 
+                 [ngModel]="cantidadProductosSeleccionados[producto.id]" (ngModelChange)="actualizarCantidad(producto.id, $event)">
+        </div>
+      </form>
+      <button (click)="realizarPedido()" class="btn btn-primary mt-3">Realizar Pedido</button>
     </div>
-    <div *ngIf="!tienda" class="mt-4">
-      <p>La tienda no está especificada.</p>
+    <div *ngIf="!productos || productos.length === 0" class="mt-4">
+      <p>No hay productos disponibles.</p>
     </div>
   </div>
+  <div *ngIf="!tienda" class="mt-4">
+    <p>La tienda no está especificada.</p>
+  </div>
+</div>

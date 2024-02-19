@@ -1,40 +1,65 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CatalogoProducto } from 'src/app/modelo/catalogo-producto';
+import { ActivatedRoute } from '@angular/router';
+
 import { Pedido } from 'src/app/modelo/pedido';
 import { Tienda } from 'src/app/modelo/tienda';
+
 import { PedidoService } from 'src/app/servicios/pedido.service';
-import { TiendaService } from 'src/app/servicios/tienda.service';
+
 
 @Component({
   selector: 'app-registro-pedido',
   templateUrl: './registro-pedido.component.html',
   styleUrls: ['./registro-pedido.component.css']
 })
-export class RegistroPedidoComponent implements OnInit {
-  tienda!: Tienda;
-  productos!: CatalogoProducto[];
-
-  constructor(private pedidoService: PedidoService, private tiendaService: TiendaService) { }
-
+export class RegistroPedidoComponent {
+  tiendaDelPedidoId: string='';
+  precioTotal: number = 0;
+  cantidadProductosSeleccionados: any;
+  
+  
+  constructor(
+    private route: ActivatedRoute,
+    private pedidoService: PedidoService,
+    private tienda: Tienda
+  ){}
   ngOnInit(): void {
-    // Aquí deberías obtener la tienda actual y los productos disponibles del catálogo
-    // Esto puede ser a través de un servicio que obtenga los datos de Firebase
-    this.tienda = this.tiendaService.obtenerMisTiendas(); // Obtener la tienda actual
-    this.productos = this.pedidoService.obtenerProductos(); // Obtener los productos disponibles del catálogo
+    this.tiendaDelPedidoId = this.route.snapshot.paramMap.get('id') || '';
+    
   }
-
+  productos =this.pedidoService.obtenerProductos()
   realizarPedido(): void {
+    // Calcular el precio total del pedido
+    this.precioTotal = 0;
+    for (const producto of this.productos) {
+      const cantidadSeleccionada = this.cantidadProductosSeleccionados[producto.id] || 0;
+      this.precioTotal += cantidadSeleccionada * producto.precioUnitario;
+    }
+    // Validar que se haya seleccionado al menos un producto
+    const productosSeleccionados = this.productos.filter(producto => this.cantidadProductosSeleccionados[producto.id]);
+    if (productosSeleccionados.length === 0) {
+      console.error('Error: Debes seleccionar al menos un producto para realizar el pedido.');
+      return;
+    }
+    
+  
+    // Crear el nuevo pedido
     const nuevoPedido: Pedido = {
-      tiendaDelPedidoId: this.tienda.id,
-      precioPedido: 0,
+      tiendaDelPedidoId: this.tiendaDelPedidoId,
+      precioPedido: this.precioTotal,
+      listaPedidoCatalogo: productosSeleccionados
     };
-
+  
+    // Llamar al servicio para realizar el pedido
     this.pedidoService.realizarPedido(nuevoPedido, this.productos)
       .then(() => {
-        // Manejar el éxito del pedido
+        console.log('Pedido realizado correctamente.');
+        // Reiniciar la selección de productos
+        this.cantidadProductosSeleccionados = {};
+        this.precioTotal = 0;
       })
       .catch(error => {
-        // Manejar el error al realizar el pedido
+        console.error('Error al realizar el pedido:', error);
       });
-  }
+    }
 }

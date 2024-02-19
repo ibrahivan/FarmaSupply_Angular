@@ -16,14 +16,14 @@ export class PedidoService {
   private productosFarmaceuticos: CatalogoProducto[] = [
     // Aquí irían los datos de los productos
     {
-    
+      id: "1",
       nombre: "Paracetamol",
       descripcion: "Analgesico y antipirético",
       cantidad: 3,
       precioUnitario: 5.99
     },
     {
-     
+      id: "2",
       nombre: "Ibuprofeno",
       descripcion: "Antiinflamatorio no esteroideo",
       cantidad: 2,
@@ -32,7 +32,7 @@ export class PedidoService {
       
     },
     {
-    
+     id: "3",
       nombre: "Omeprazol",
       descripcion: "Inhibidor de la bomba de protones",
       cantidad: 5,
@@ -40,14 +40,14 @@ export class PedidoService {
     
     },
     {
-     
+      id: "4",
       nombre: "Aspirina",
       descripcion: "Analgésico, antiinflamatorio y antipirético",
       cantidad: 15,
       precioUnitario: 3.99
     },
     {
-      
+      id: "5",
       nombre: "Amoxicilina",
       descripcion: "Antibiótico del grupo de las penicilinas",
       cantidad: 2,
@@ -55,7 +55,7 @@ export class PedidoService {
      
     },
     {
-     
+      id: "6",
       nombre: "Cetirizina",
       descripcion: "Antihistamínico",
       cantidad: 3,
@@ -71,7 +71,7 @@ export class PedidoService {
   obtenerProductos(): CatalogoProducto[] {
     return this.productosFarmaceuticos;
   }
-  realizarPedido(pedido: Pedido, productos: CatalogoProducto[]): Promise<void> {
+  realizarPedido(pedido: Pedido): Promise<void> {
     // Agregar la lista de productos al pedido
     pedido.listaPedidoCatalogo = this.obtenerProductos();
 
