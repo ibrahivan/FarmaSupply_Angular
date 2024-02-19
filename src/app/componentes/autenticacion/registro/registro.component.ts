@@ -72,7 +72,7 @@ export class RegistroComponent {
       telefono: this.formularioRegistro.value.telefono,
       password: this.formularioRegistro.value.password,
       rol: 'ROLE_USER',
-      fechaRegistro: new Date(),
+   
     }
     this.baseDatosService.insertar('usuarios', usuario).then(() => {
       if (this.tipoRegistro === 'admin') {

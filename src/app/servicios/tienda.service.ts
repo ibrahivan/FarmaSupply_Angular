@@ -12,7 +12,7 @@ export class TiendaService {
   constructor(private baseDatosServicio: BaseDatosService) { }
 
   obtenerMisTiendas(propietarioTiendaId: string): Observable<Tienda[]> {
-    return this.baseDatosServicio.obtenerPorFiltro('motos', 'propietarioTiendaId', propietarioTiendaId);
+    return this.baseDatosServicio.obtenerPorFiltro('tiendas', 'propietarioTiendaId', propietarioTiendaId);
   }
   
   registrarTienda(tienda: Tienda, propietarioTiendaId: string )  : Promise<DocumentReference> {

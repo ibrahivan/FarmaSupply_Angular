@@ -1,1 +1,20 @@
-<p>registro-pedido works!</p>
+<div class="container">
+    <div *ngIf="tienda" class="mt-4">
+      <h2>Pedido para {{ tienda.nombreTienda }}</h2>
+      <div *ngIf="productos && productos.length" class="mt-4">
+        <h3>Productos disponibles:</h3>
+        <ul class="list-group">
+          <li *ngFor="let producto of productos" class="list-group-item">
+            {{ producto.nombre }} - {{ producto.descripcion }} - Precio: {{ producto.precioUnitario | currency:'USD':'symbol':'1.2-2' }}
+          </li>
+        </ul>
+        <button (click)="realizarPedido()" class="btn btn-primary mt-3">Realizar Pedido</button>
+      </div>
+      <div *ngIf="!productos || productos.length === 0" class="mt-4">
+        <p>No hay productos disponibles.</p>
+      </div>
+    </div>
+    <div *ngIf="!tienda" class="mt-4">
+      <p>La tienda no está especificada.</p>
+    </div>
+  </div>

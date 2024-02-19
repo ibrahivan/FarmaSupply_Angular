@@ -9,6 +9,6 @@ export interface Usuario {
     apellidos: string;
     telefono: string;
     rol?: string;
-    fechaRegistro?: Date;
+  
     misTiendas?: Tienda[] ;
 }

@@ -1,5 +1,5 @@
 export interface CatalogoProducto {
-  id: string;
+  id?: string;
   nombre: string;
   cantidad: number;
   descripcion: string;

@@ -31,7 +31,7 @@ export class ListaUsuariosComponent {
         map((usuarios: Usuario[]) => {
           return usuarios.map((usuario) => ({
             ...usuario,
-            fechaRegistro: this.convertirTimestampADate(usuario.fechaRegistro),
+           
           }));
         })
       )
@@ -40,9 +40,6 @@ export class ListaUsuariosComponent {
       });
   }
 
-  private convertirTimestampADate(timestamp: any): Date {
-    return timestamp.toDate();
-  }
 
   eliminarUsuario(id: string, email: string) {
 
