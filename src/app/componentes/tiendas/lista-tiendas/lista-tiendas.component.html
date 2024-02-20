@@ -20,7 +20,7 @@
                         <button class="btn btn-danger btn-sm" *ngIf="tienda.id" (click)="confirmarEliminarTienda(tienda.id, tienda.nombreTienda, tienda.direccionTienda)">
                             <i class="bi bi-trash"> Eliminar</i>
                         </button>
-                        <a routerLink="/pedidos/realizar-pedido/{{ tienda.id }}" class="btn buttonPrincipal"><i class="bi bi-arrow-right-circle"> Realizar pedido</i></a>
+                        <a routerLink="/pedidos/registro-pedido/{{ tienda.id }}" class="btn buttonPrincipal"><i class="bi bi-arrow-right-circle"> Realizar pedido</i></a>
                     </div>
                 </div>
             </div>

@@ -1,27 +1,29 @@
 <div class="container">
-  <div *ngIf="tienda" class="mt-4">
-    <h2>Pedido para {{ tienda.nombre }}</h2>
-    <div *ngIf="productos && productos.length" class="mt-4">
-      <h3>Productos disponibles:</h3>
-      <form>
-        <div *ngFor="let producto of productos" class="form-check">
-          <input type="checkbox" class="form-check-input" id="{{producto.id}}" 
-                 [checked]="cantidadProductosSeleccionados[producto.id] > 0"
-                 (change)="actualizarCantidad(producto.id, $event.target.checked)">
-          <label class="form-check-label" for="{{producto.id}}">
-            {{ producto.nombre }} - {{ producto.descripcion }} - Precio: {{ producto.precioUnitario | currency:'USD':'symbol':'1.2-2' }}
-          </label>
-          <input type="number" class="form-control" [disabled]="cantidadProductosSeleccionados[producto.id] === 0" 
-                 [ngModel]="cantidadProductosSeleccionados[producto.id]" (ngModelChange)="actualizarCantidad(producto.id, $event)">
-        </div>
-      </form>
-      <button (click)="realizarPedido()" class="btn btn-primary mt-3">Realizar Pedido</button>
-    </div>
-    <div *ngIf="!productos || productos.length === 0" class="mt-4">
-      <p>No hay productos disponibles.</p>
-    </div>
+  <!-- Mostrar la tienda actual seleccionada -->
+  <div *ngIf="tiendaActual" class="mb-3">
+    <p>Tienda Actual: {{ tiendaActual.nombreTienda }}</p>
   </div>
-  <div *ngIf="!tienda" class="mt-4">
-    <p>La tienda no está especificada.</p>
-  </div>
+  
+  <!-- Formulario para realizar el pedido -->
+  <form (ngSubmit)="realizarPedido()">
+    <div *ngIf="productosDisponibles$ | async as productos">
+      <h2>Realizar Pedido</h2>
+      <div *ngFor="let producto of productos">
+        <label>
+          <input type="checkbox" [value]="producto" (change)="toggleProducto(producto, $event)">
+          {{ producto.nombre }} - {{ producto.descripcion }} - Precio: {{ producto.precioUnitario | currency }}
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary">Realizar Pedido</button>
+    </div>
+  </form>
+
+  <!-- Mostrar mensaje de carga si los productos están cargando -->
+  <ng-container *ngIf="productosDisponibles$ | async as productos; else loadingProducts">
+    <div *ngIf="!productos.length">No hay productos disponibles.</div>
+  </ng-container>
+
+  <ng-template #loadingProducts>
+    <p>Cargando productos...</p>
+  </ng-template>
 </div>

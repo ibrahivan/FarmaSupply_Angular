@@ -20,4 +20,9 @@ export class TiendaService {
     return this.baseDatosServicio.insertar('tiendas', tienda);
     
   }
+
+  obtenerTiendaDeLocalStorage(){
+    const tiendaActual = localStorage.getItem('tiendaActual');
+    return tiendaActual ? JSON.parse(tiendaActual) : null;
+  }
 }

@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { CatalogoProducto } from 'src/app/modelo/catalogo-producto';
 import { Pedido } from 'src/app/modelo/pedido';
 import { Tienda } from 'src/app/modelo/tienda';
-
 import { PedidoService } from 'src/app/servicios/pedido.service';
 
 
@@ -12,54 +12,61 @@ import { PedidoService } from 'src/app/servicios/pedido.service';
   templateUrl: './registro-pedido.component.html',
   styleUrls: ['./registro-pedido.component.css']
 })
-export class RegistroPedidoComponent {
-  tiendaDelPedidoId: string='';
-  precioTotal: number = 0;
-  cantidadProductosSeleccionados: any;
-  
-  
+export class RegistroPedidosComponent implements OnInit {
+  tiendaActualId: string = '';
+  tiendaActual: Tienda | undefined;
+  productosDisponibles$: Observable<CatalogoProducto[]> | undefined;
+  productosSeleccionados: CatalogoProducto[] = [];
+
   constructor(
     private route: ActivatedRoute,
-    private pedidoService: PedidoService,
-    private tienda: Tienda
-  ){}
+    private router: Router,
+   
+    private pedidoService: PedidoService
+  ) {}
+
   ngOnInit(): void {
-    this.tiendaDelPedidoId = this.route.snapshot.paramMap.get('id') || '';
-    
+    this.tiendaActualId = this.route.snapshot.paramMap.get('id') || '';
+    this.tiendaActual = this.route.snapshot.data['tienda'];
+    this.productosDisponibles$ = this.pedidoService.obtenerProductosDelPedido();
   }
-  productos =this.pedidoService.obtenerProductos()
+
+  toggleProducto(producto: CatalogoProducto, event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    if (isChecked) {
+      // Agregar el producto a la lista de productos seleccionados
+      this.productosSeleccionados.push(producto);
+    } else {
+      // Eliminar el producto de la lista de productos seleccionados
+      const index = this.productosSeleccionados.findIndex(p => p.id === producto.id);
+      if (index !== -1) {
+        this.productosSeleccionados.splice(index, 1);
+      }
+    }
+  }
+  
+
   realizarPedido(): void {
-    // Calcular el precio total del pedido
-    this.precioTotal = 0;
-    for (const producto of this.productos) {
-      const cantidadSeleccionada = this.cantidadProductosSeleccionados[producto.id] || 0;
-      this.precioTotal += cantidadSeleccionada * producto.precioUnitario;
-    }
-    // Validar que se haya seleccionado al menos un producto
-    const productosSeleccionados = this.productos.filter(producto => this.cantidadProductosSeleccionados[producto.id]);
-    if (productosSeleccionados.length === 0) {
-      console.error('Error: Debes seleccionar al menos un producto para realizar el pedido.');
-      return;
-    }
-    
-  
-    // Crear el nuevo pedido
-    const nuevoPedido: Pedido = {
-      tiendaDelPedidoId: this.tiendaDelPedidoId,
-      precioPedido: this.precioTotal,
-      listaPedidoCatalogo: productosSeleccionados
-    };
-  
-    // Llamar al servicio para realizar el pedido
-    this.pedidoService.realizarPedido(nuevoPedido, this.productos)
-      .then(() => {
-        console.log('Pedido realizado correctamente.');
-        // Reiniciar la selección de productos
-        this.cantidadProductosSeleccionados = {};
-        this.precioTotal = 0;
-      })
-      .catch(error => {
-        console.error('Error al realizar el pedido:', error);
+    if (this.tiendaActual && this.productosSeleccionados.length > 0) {
+      const pedido: Pedido = {
+        tiendaDelPedidoId: this.tiendaActualId,
+        listaPedidoCatalogo: this.productosSeleccionados,
+        precioPedido: this.calcularPrecioTotal()
+      };
+      this.pedidoService.realizarPedido(pedido, this.tiendaActualId).then(() => {
+        console.log('Pedido realizado correctamente');
+        // Redireccionar o mostrar mensaje de éxito
+      }).catch(error => {
+        console.error('Error al realizar el pedido: ', error);
+        // Manejar el error
       });
+    } else {
+      console.error('Error: No se puede realizar el pedido porque no se ha seleccionado una tienda o productos.');
+      // Manejar el error
     }
+  }
+
+  calcularPrecioTotal(): number {
+    return this.productosSeleccionados.reduce((total, producto) => total + producto.precioUnitario, 0);
+  }
 }

@@ -1,83 +1,35 @@
 import { Injectable } from '@angular/core';
 import { CatalogoProducto } from '../modelo/catalogo-producto';
 import { BaseDatosService } from './base-datos.service';
-
 import { Pedido } from '../modelo/pedido';
-import { Tienda } from '../modelo/tienda';
-
-
-
-
+import { DocumentReference } from '@angular/fire/firestore';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PedidoService {
-  private productosFarmaceuticos: CatalogoProducto[] = [
-    // Aquí irían los datos de los productos
-    {
-      id: "1",
-      nombre: "Paracetamol",
-      descripcion: "Analgesico y antipirético",
-      cantidad: 3,
-      precioUnitario: 5.99
-    },
-    {
-      id: "2",
-      nombre: "Ibuprofeno",
-      descripcion: "Antiinflamatorio no esteroideo",
-      cantidad: 2,
-      precioUnitario: 7.49,
-     
-      
-    },
-    {
-     id: "3",
-      nombre: "Omeprazol",
-      descripcion: "Inhibidor de la bomba de protones",
-      cantidad: 5,
-      precioUnitario: 9.99,
-    
-    },
-    {
-      id: "4",
-      nombre: "Aspirina",
-      descripcion: "Analgésico, antiinflamatorio y antipirético",
-      cantidad: 15,
-      precioUnitario: 3.99
-    },
-    {
-      id: "5",
-      nombre: "Amoxicilina",
-      descripcion: "Antibiótico del grupo de las penicilinas",
-      cantidad: 2,
-      precioUnitario: 12.99,
-     
-    },
-    {
-      id: "6",
-      nombre: "Cetirizina",
-      descripcion: "Antihistamínico",
-      cantidad: 3,
-      precioUnitario: 8.49
-    },
-  ];
+
+  constructor(private baseDatosServicio: BaseDatosService) { }
   
-  constructor(private baseDatosServicio: BaseDatosService, ) { 
-    
+  obtenerProductosDelPedido(): Observable<CatalogoProducto[]> {
+    // Aquí deberías obtener los productos del catálogo que están en los pedidos
+    return this.baseDatosServicio.obtenerTodos('catalogoProductos').pipe(
+      map((pedidos: Pedido[]) => {
+        const productos: CatalogoProducto[] = [];
+        pedidos.forEach(pedido => {
+          pedido.listaPedidoCatalogo?.forEach(producto => {
+            productos.push(producto);
+          });
+        });
+        return productos;
+      })
+    );
   }
 
-  
-  obtenerProductos(): CatalogoProducto[] {
-    return this.productosFarmaceuticos;
-  }
-  realizarPedido(pedido: Pedido): Promise<void> {
-    // Agregar la lista de productos al pedido
-    pedido.listaPedidoCatalogo = this.obtenerProductos();
-
-    // Insertar el nuevo pedido en la base de datos
-    return this.baseDatosServicio.insertar('pedidos', pedido)
-      .then(() => console.log('Pedido realizado correctamente'))
-      .catch(error => console.error('Error al realizar el pedido: ', error));
+  realizarPedido(pedido: Pedido, tiendaDelPedidoId: string )  : Promise<DocumentReference> {
+    pedido.tiendaDelPedidoId = tiendaDelPedidoId;
+    return this.baseDatosServicio.insertar('pedidos', pedido);
+    
   }
 }
