@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Tienda } from '../modelo/tienda';
 import { BaseDatosService } from './base-datos.service';
 import { DocumentReference } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TiendaService {
+  tiendas: any;
 
   constructor(private baseDatosServicio: BaseDatosService) { }
 
@@ -25,4 +26,7 @@ export class TiendaService {
     const tiendaActual = localStorage.getItem('tiendaActual');
     return tiendaActual ? JSON.parse(tiendaActual) : null;
   }
+
+ 
 }
+

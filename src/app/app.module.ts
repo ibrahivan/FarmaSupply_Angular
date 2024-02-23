@@ -10,6 +10,7 @@ import { MenuComponent } from './core/menu/menu.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore'; // Asegúrate de importar esto
 
 
 
@@ -26,6 +27,7 @@ import { environment } from 'src/environments/environment';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    AngularFirestoreModule, 
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

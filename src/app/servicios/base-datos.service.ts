@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, collection, collectionData, deleteDoc, doc, docData, query, updateDoc, where } from '@angular/fire/firestore';
+import { DocumentData, Firestore, addDoc, collection, collectionData, deleteDoc, doc, docData, query, updateDoc, where } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,7 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class BaseDatosService {
 
-  constructor(private fbs: Firestore) {}
+  constructor(private fbs: Firestore ){}
+
+
 
   /**
    * Obtiene todos los documentos de una colección determinada
@@ -41,6 +43,13 @@ export class BaseDatosService {
     return addDoc(colecctionRef, element);
   }
 
+    /**
+   * Metodo para insertar un nuevo documento en una colección determinada
+   * @param coleccion de la base de datos en la que se va a insertar
+   * @param element elemento a insertar
+   * @returns una promesa
+   */
+  
   /**
    * Obtiene un documento de una colección que cumpla con un filtro
    * @param coleccion de la base de datos que se va a buscar
@@ -75,4 +84,7 @@ export class BaseDatosService {
     const elementDocRef = doc(this.fbs, `${coleccion}/${documento.id}`);
     return updateDoc(elementDocRef, documento);
   }
+
+  
+
 }

@@ -1,1 +1,29 @@
-<p>lista-pedidos works!</p>
+<h2>Lista de Pedidos</h2>
+
+<!-- Desplegable de Tiendas -->
+<div *ngIf="misTiendas.length > 0">
+  <label for="selectTienda">Selecciona una tienda:</label>
+  <select id="selectTienda" [(ngModel)]="tiendaSeleccionada" (change)="cargarPedidos(tiendaSeleccionada?.id)">
+    <option *ngFor="let tienda of misTiendas" [ngValue]="tienda">{{ tienda.nombreTienda }}</option>
+  </select>
+</div>
+
+<!-- Lista de Pedidos -->
+<div *ngIf="pedidos.length > 0">
+  <h3>Pedidos de {{ tiendaSeleccionada?.nombreTienda }}</h3>
+  <ul>
+    <li *ngFor="let pedido of pedidos">
+      <!-- Mostrar información del pedido -->
+      <p>Id: {{ pedido.id }}</p>
+      <p>Productos:</p>
+      <ul>
+        <li *ngFor="let producto of pedido.listaPedidoCatalogo">
+          <p>Nombre: {{ producto.nombre }}</p>
+          <p>Cantidad: {{ producto.cantidad }}</p>
+          <p>Precio Unitario: {{ producto.precioUnitario }}</p>
+        </li>
+      </ul>
+      <p>Precio Total: {{ pedido.precioPedido }}</p>
+    </li>
+  </ul>
+</div>

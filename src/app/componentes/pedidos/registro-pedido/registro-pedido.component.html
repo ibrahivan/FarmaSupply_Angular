@@ -1,10 +1,9 @@
 <div class="container">
   <!-- Mostrar la tienda actual seleccionada -->
-  <div *ngIf="tiendaActual" class="mb-3">
-    <p>Tienda Actual: {{ tiendaActual.nombreTienda }}</p>
+  <div *ngIf="nombreTienda | async as nombreTienda" class="mb-3">
+    <p>Tienda Actual: {{ nombreTienda }}</p>
   </div>
-  
-  <!-- Formulario para realizar el pedido -->
+
   <form (ngSubmit)="realizarPedido()">
     <div *ngIf="productosDisponibles$ | async as productos">
       <h2>Realizar Pedido</h2>
@@ -13,15 +12,11 @@
           <input type="checkbox" [value]="producto" (change)="toggleProducto(producto, $event)">
           {{ producto.nombre }} - {{ producto.descripcion }} - Precio: {{ producto.precioUnitario | currency }}
         </label>
+        <input type="number" [(ngModel)]="producto.cantidad" placeholder="Cantidad" name="cantidad_{{ producto.id }}"> <!-- Input para seleccionar la cantidad -->
       </div>
       <button type="submit" class="btn btn-primary">Realizar Pedido</button>
     </div>
   </form>
-
-  <!-- Mostrar mensaje de carga si los productos están cargando -->
-  <ng-container *ngIf="productosDisponibles$ | async as productos; else loadingProducts">
-    <div *ngIf="!productos.length">No hay productos disponibles.</div>
-  </ng-container>
 
   <ng-template #loadingProducts>
     <p>Cargando productos...</p>

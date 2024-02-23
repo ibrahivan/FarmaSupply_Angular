@@ -25,7 +25,10 @@ export class UsuarioService {
   obtenerUsuarioActual(){
     return this.auth.currentUser;
   }
-
+  obtenerIdUsuario(): string | null {
+    const user = this.auth.currentUser;
+    return user ? user.uid : null;
+  }
   async borrarUsuario(usuario: Usuario){
     try {
       const response = await this.login(usuario);
@@ -38,6 +41,8 @@ export class UsuarioService {
       console.error("Error al eliminar usuario de de Auth firebase:", error);
     }
   }
+
+  
 
   guardarUsuarioEnLocalStorage(){
 
