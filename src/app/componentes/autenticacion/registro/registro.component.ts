@@ -33,7 +33,7 @@ export class RegistroComponent {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params: { [x: string]: string; }) => {
       this.tipoRegistro = params['from'] || ''; 
     });
   }

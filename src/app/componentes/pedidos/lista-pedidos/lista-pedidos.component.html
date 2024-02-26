@@ -3,9 +3,12 @@
 <!-- Desplegable de Tiendas -->
 <div *ngIf="misTiendas.length > 0">
   <label for="selectTienda">Selecciona una tienda:</label>
-  <select id="selectTienda" [(ngModel)]="tiendaSeleccionada" (change)="cargarPedidos(tiendaSeleccionada?.id)">
+  <select id="selectTienda" [(ngModel)]="tiendaSeleccionada" (change)="tiendaSeleccionada && tiendaSeleccionada.id && cargarPedidos(tiendaSeleccionada.id)">
     <option *ngFor="let tienda of misTiendas" [ngValue]="tienda">{{ tienda.nombreTienda }}</option>
   </select>
+  
+  
+  
 </div>
 
 <!-- Lista de Pedidos -->
@@ -14,8 +17,8 @@
   <ul>
     <li *ngFor="let pedido of pedidos">
       <!-- Mostrar información del pedido -->
-      <p>Id: {{ pedido.id }}</p>
-      <p>Productos:</p>
+      
+      <p>Pedido realizado:</p>
       <ul>
         <li *ngFor="let producto of pedido.listaPedidoCatalogo">
           <p>Nombre: {{ producto.nombre }}</p>

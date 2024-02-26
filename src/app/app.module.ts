@@ -11,7 +11,7 @@ import { FooterComponent } from './core/footer/footer.component';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore'; // Asegúrate de importar esto
-
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 
 
@@ -33,7 +33,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore'; // Aseg
     provideFirestore(() => getFirestore()),
   
   ],
-  providers: [],
+  providers: [  { provide: FIREBASE_OPTIONS, useValue: environment.firebase } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
