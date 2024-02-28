@@ -62,6 +62,7 @@ export class RegistroPedidosComponent implements OnInit {
         tiendaDelPedidoId: this.tiendaActualId,
         listaPedidoCatalogo: this.productosSeleccionados,
         precioPedido: this.calcularPrecioTotal(this.productosSeleccionados),
+        numeroPedido: ''
       };
   
       // Llamar al servicio para realizar el pedido

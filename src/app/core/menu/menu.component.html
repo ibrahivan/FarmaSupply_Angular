@@ -37,20 +37,24 @@
                         <a class="nav-link fw-bold " routerLink="/autenticacion/dashboard"><i
                                 class="bi bi-house fs-5"> Volver a dashboard</i></a>
                     </li>
-                    <!--   <li class="nav-item me-3" *ngIf="componenteActual === 'quedadas/listado-quedadas'">
-                    <a class="nav-link fw-bold text-white" routerLink="/autenticacion/dashboard"><i class="bi bi-house fs-5"> Volver a dashboard</i></a>
-                </li> -->
+                    <li class="nav-item me-3" *ngIf="componenteActual === 'pedidos/mis-pedidos'">
+                        <a class="nav-link fw-bold " routerLink="/autenticacion/dashboard"><i
+                                class="bi bi-house fs-5"> Volver a dashboard</i></a>
+                    </li>
+                    
                     <li class="nav-item me-3" *ngIf="componenteActual === 'tiendas/registrar-tienda'">
                         <a class="nav-link fw-bold " routerLink="/tiendas/mis-tiendas"><i
-                                class="bi bi-bicycle fs-5"> Volver a mis tiendas</i></a>
+                            class="bi bi bi-shop fs-3 ms-3"> Volver a mis tiendas</i></a>
+                    </li>
+                    <li class="nav-item me-3" *ngIf="componenteActual === 'pedidos/registro-pedido'">
+                        <a class="nav-link fw-bold " routerLink="/tiendas/mis-tiendas"><i
+                            class="bi bi bi-shop fs-3 ms-3"> Volver a mis tiendas</i></a>
                     </li>
                     <li class="nav-item me-3" *ngIf="componenteActual === 'administracion/editar-usuario'">
                         <a class="nav-link fw-bold " routerLink="/administracion/listado-usuarios"><i
                                 class="bi bi-person-fill-gear fs-5"> Volver a administración de usuarios</i></a>
                     </li>
-                    <!-- <li class="nav-item me-3" *ngIf="componenteActual === 'quedadas/planificar-quedada'">
-                    <a class="nav-link fw-bold text-white" routerLink="/quedadas/listado-quedadas"><i class="bi bi-people-fill fs-5"> Volver a quedadas</i></a>
-                </li>     -->
+                   
                 </ul>
             </div>
         </div>

@@ -1,24 +1,36 @@
-<div class="container">
-  <!-- Mostrar la tienda actual seleccionada -->
+<div class="container mt-5">
   <div *ngIf="nombreTienda | async as nombreTienda" class="mb-3">
-    <p>Tienda Actual: {{ nombreTienda }}</p>
+    <h3>Tienda Actual: {{ nombreTienda }}</h3>
   </div>
 
   <form (ngSubmit)="realizarPedido()">
     <div *ngIf="productosDisponibles$ | async as productos">
-      <h2>Realizar Pedido</h2>
-      <div *ngFor="let producto of productos">
-        <label>
-          <input type="checkbox" [value]="producto" (change)="toggleProducto(producto, $event)">
-          {{ producto.nombre }} - {{ producto.descripcion }} - Precio: {{ producto.precioUnitario | currency }}
-        </label>
-        <input type="number" [(ngModel)]="producto.cantidad" placeholder="Cantidad" name="cantidad_{{ producto.id }}"> <!-- Input para seleccionar la cantidad -->
+      <h3>Realizar Pedido</h3>
+      <div *ngFor="let producto of productos" class="mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="producto{{ producto.id }}" [value]="producto" (change)="toggleProducto(producto, $event)">
+          <label class="form-check-label text-dark" for="producto{{ producto.id }}">
+            <strong>{{ producto.nombre }}</strong> - {{ producto.descripcion }} - <strong>Precio caja: </strong>{{ producto.precioUnitario | currency }}
+          </label>
+        </div>
+        <input type="number" [(ngModel)]="producto.cantidad" class="form-control mt-1" placeholder="Cantidad" name="cantidad_{{ producto.id }}">
       </div>
       <button type="submit" class="btn btn-primary">Realizar Pedido</button>
     </div>
   </form>
 
-  <ng-template #loadingProducts>
-    <p>Cargando productos...</p>
-  </ng-template>
+  <div *ngIf="productosDisponibles$ | async as productos; else loadingProducts" class="mt-3">
+    <div *ngIf="productos.length === 0" class="alert alert-warning" role="alert">
+      No hay productos disponibles.
+    </div>
+  </div>
 </div>
+
+<ng-template #loadingProducts>
+  <div class="container mt-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-2">Cargando productos...</p>
+  </div>
+</ng-template>

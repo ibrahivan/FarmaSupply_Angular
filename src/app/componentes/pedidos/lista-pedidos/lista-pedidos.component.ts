@@ -43,7 +43,11 @@ export class ListaPedidosComponent implements OnInit {
     const pedidoService = this.injector.get(PedidoService); // Obtener instancia de PedidoService
     pedidoService.obtenerPedidosPorTienda(idTienda).subscribe(
       (pedidos: Pedido[]) => {
-        this.pedidos = pedidos;
+        this.pedidos = pedidos.map((pedido, index) => {
+          // Simular un número de pedido inventado
+          pedido.numeroPedido = `${index + 1}`;
+          return pedido;
+        });
       },
       (error: any) => {
         console.error('Error al cargar pedidos:', error);
