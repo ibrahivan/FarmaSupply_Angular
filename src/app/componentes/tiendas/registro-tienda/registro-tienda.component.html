@@ -1,47 +1,41 @@
-<br>
-<br>
 <div class="registro cardPrincipal">
-    <form class="custom-form" (ngSubmit)="submitForm()">
-      <h2 class="text-center mb-5 bi bi bi-shop fs-3 ms-3" style="color: #1f3c85;"> Registro nueva tienda</h2>  
-      <div class="mb-3">
-        <label for="marca" class="form-label textoPrincipal">Nombre tienda</label>
-        <input
-          type="text"
-          id="marca"
-          name="marca"
-          class="form-control"
+  <form class="custom-form" (ngSubmit)="submitForm()" #form="ngForm">
+    <h2 class="text-center mb-5 bi bi bi-shop fs-3 ms-3" style="color: #1f3c85;"> Registro nueva tienda</h2>  
+    <div class="mb-3">
+      <label for="marca" class="form-label textoPrincipal text-dark">Nombre tienda</label>
+      <input
+        type="text"
+        id="marca"
+        name="marca"
+        class="form-control"
+        [(ngModel)]="tienda.nombreTienda"
+        required  >
       
-          [(ngModel)]="tienda.nombreTienda"
-          required
-        />
-      </div>
-  
-      <div class="mb-3">
-        <label for="modelo" class="form-label textoPrincipal">Direccion </label>
-        <input
-          type="text"
-          id="modelo"
-          name="modelo"
-          class="form-control"
-         
-          [(ngModel)]="tienda.direccionTienda"
-          required
-        />
-      </div>
-  
-      <div class="mb-3">
-        <label for="color" class="form-label textoPrincipal">Codigo postal</label>
-        <input
-          type="text"
-          id="color"
-          name="color"
-          class="form-control"
-         
-          [(ngModel)]="tienda.codigopostalTienda"
-          required
-        />
-      </div> 
-      <button type="submit" class="btn btn-primary mt-5"><i class="bi bi-plus-square fs-5"> Alta tienda</i></button>
-    </form>
-  </div>
-  
+    </div>
+
+    <div class="mb-3">
+      <label for="modelo" class="form-label textoPrincipal text-dark">Direccion</label>
+      <input
+        type="text"
+        id="modelo"
+        name="modelo"
+        class="form-control"
+        [(ngModel)]="tienda.direccionTienda"
+        required  >
+      
+    </div>
+
+    <div class="mb-3">
+      <label for="color" class="form-label textoPrincipal text-dark">Codigo postal</label>
+      <input
+        type="text"
+        id="color"
+        name="color"
+        class="form-control"
+        [(ngModel)]="tienda.codigopostalTienda"
+        required>
+      
+    </div> 
+    <button type="submit" class="btn btn-primary mt-5" [disabled]="!form.valid"><i class="bi bi-plus-square fs-5"> Alta tienda</i></button>
+  </form>
+</div>

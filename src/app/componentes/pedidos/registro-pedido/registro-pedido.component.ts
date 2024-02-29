@@ -54,17 +54,16 @@ export class RegistroPedidosComponent implements OnInit {
       }
     }
   }
-  
 
   realizarPedido(): void {
-    if (this.tiendaActualId && this.productosSeleccionados.length > 0) {
+    if (this.pedidoValido()) {
       const nuevoPedido: Pedido = {
         tiendaDelPedidoId: this.tiendaActualId,
         listaPedidoCatalogo: this.productosSeleccionados,
         precioPedido: this.calcularPrecioTotal(this.productosSeleccionados),
         numeroPedido: ''
       };
-  
+
       // Llamar al servicio para realizar el pedido
       this.pedidoService.realizarPedido(nuevoPedido, this.tiendaActualId, this.productosSeleccionados)
         .then(() => {
@@ -76,7 +75,8 @@ export class RegistroPedidosComponent implements OnInit {
           console.error('Error al realizar el pedido:', error);
           this.notificacionesServicio.mostrarNotificacion("Error al realizar el pedido", "Por favor, inténtalo de nuevo más tarde", "error");
         });
-         // Agregar el pedido a la lista de pedidos de la tienda
+
+      // Agregar el pedido a la lista de pedidos de la tienda
       const tienda: Tienda = this.tiendaService.obtenerTiendaDeLocalStorage();
       if (tienda) {
         if (tienda.misPedidos) {
@@ -93,10 +93,21 @@ export class RegistroPedidosComponent implements OnInit {
       this.notificacionesServicio.mostrarNotificacion("Error al realizar el pedido", "Por favor, selecciona una tienda y al menos un producto", "error");
     }
   }
-  
 
   calcularPrecioTotal(productos: CatalogoProducto[]): number {
     // Convertir los precios unitarios a números y luego sumarlos
-    return productos.reduce((total, producto) => total + (parseFloat(String(producto.precioUnitario * producto.cantidad)) || 0), 0);  
-}
+    return productos.reduce((total, producto) => total + (parseFloat(String(producto.precioUnitario * producto.cantidad)) || 0), 0);
+  }
+
+  pedidoValido(): boolean {
+    return !!this.tiendaActualId && this.productosSeleccionados.length > 0;
+  }
+  esProductoSeleccionado(id: number): boolean {
+    return this.productosSeleccionados.some(p => p.id === id.toString());
+  }
+  productosConCantidadSeleccionada(): boolean {
+    return this.productosSeleccionados.every(producto => producto.cantidad > 0);
+  }
+  
+  
 }

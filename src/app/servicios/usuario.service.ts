@@ -54,7 +54,7 @@ export class UsuarioService {
       (data: Usuario[]) => {
         if(data.length > 0) {
           usuario = data[0];
-          console.log('Usuario encontrado:', usuario);
+          
           localStorage.setItem('usuarioActual', JSON.stringify(usuario));
         }
       }

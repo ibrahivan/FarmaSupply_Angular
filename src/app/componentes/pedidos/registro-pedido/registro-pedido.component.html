@@ -13,9 +13,11 @@
             <strong>{{ producto.nombre }}</strong> - {{ producto.descripcion }} - <strong>Precio caja: </strong>{{ producto.precioUnitario | currency }}
           </label>
         </div>
-        <input type="number" [(ngModel)]="producto.cantidad" class="form-control mt-1" placeholder="Cantidad" name="cantidad_{{ producto.id }}">
+        <div>
+          <input type="number" [(ngModel)]="producto.cantidad" class="form-control mt-1" placeholder="Cantidad" name="cantidad_{{ producto.id }}" [required]="esProductoSeleccionado(+producto.id)">
+        </div>
       </div>
-      <button type="submit" class="btn btn-primary">Realizar Pedido</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!productosConCantidadSeleccionada()">Realizar Pedido</button>
     </div>
   </form>
 
